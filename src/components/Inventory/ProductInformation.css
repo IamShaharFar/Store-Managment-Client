@@ -1,0 +1,99 @@
+/* ProductInformation.css */
+.product-information-container{
+display: flex;
+justify-content: center;
+flex-direction: column;
+align-items: center;
+}
+
+.product-information {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    width: 70vw;
+}
+
+.product-information hr{
+    margin-bottom: 80px;
+}
+
+.product-information input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.category-add-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .remove-category-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;  /* Makes it a circle */
+    padding: 8px;  /* Adjust as needed */
+    margin-right: 10px;  /* Space between the button and category name */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 10px;  /* Adjust as needed */
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .remove-category-button:hover {
+    background-color: #e60000;
+  }
+  
+  .category-add-title {
+    margin-right: 20px;
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+  
+  .category-add-select {
+    flex: 1;
+    margin-right: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .category-add-button {
+    padding: 7px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .category-add-button:hover {
+    background-color: #0056b3;
+  }
+  
+
+.product-information button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.product-information button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,42 @@
+/* CustomerInformation.css */
+.customer-information-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.customer-information {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    width: 70vw;
+}
+
+.customer-information hr {
+    margin-bottom: 20px; /* Adjusted from 80px to 20px */
+}
+
+.customer-information input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.customer-information button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.customer-information button:hover {
+    background-color: #0056b3;
+}
