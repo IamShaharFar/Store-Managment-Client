@@ -1,38 +1,85 @@
 /* CustomerCard.css */
+
 .customer-card {
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    height: 250px;
+    padding: 20px;
+    margin: 20px;
     display: flex;
-    justify-content: space-between;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    align-items: flex-start;
+    transition: box-shadow 0.3s;
+}
+
+.customer-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+    border-radius: 50%;
+    margin-right: 20px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
 
 .customer-info {
-    flex: 1;
+    flex-grow: 1;
+}
+
+.customer-name {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.customer-email,
+.contact-number,
+.address {
+    margin-bottom: 5px;
 }
 
 .button-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 .update-button,
 .delete-button {
+    margin: 5px 0;
     padding: 10px;
     border: none;
     border-radius: 4px;
+    font-size: 1em;
     cursor: pointer;
-    font-size: 16px;
+    width: 100px;
 }
 
 .update-button {
-    background-color: #28a745;
-    color: white;
+    background-color: #2ecc71;
+    color: #ffffff;
 }
 
 .delete-button {
-    background-color: #dc3545;
-    color: white;
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .customer-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-image {
+        margin: 0 0 20px 0;
+    }
+
+    .button-container {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
 }

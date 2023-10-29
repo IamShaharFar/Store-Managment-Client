@@ -11,7 +11,11 @@ import Customers from "./components/Customers/Customers";
 import Orders from "./components/Orders/Orders";
 import ProductInformation from "./components/Inventory/ProductInformation";
 import CustomerInformation from "./components/Customers/CustomerInformation";
+import CookieConsent from "./components/CookieConsent ";
 import withAuthorization from "./components/withAuthorization";
+import MonthlySalesChart from "./components/Inventory/MonthlySalesChart";
+import ProductStatistics from "./components/Inventory/ProductStatistics";
+import ExtraInfo from "./components/ExtraInfo/ExtraInfo";
 
 function RouteChangeListener() {
   const location = useLocation();
@@ -46,12 +50,39 @@ function RouteChangeListener() {
 
 function App() {
   const [isLogged, setIsLogged] = useState(!!localStorage.getItem("jwtToken"));
+  const [cookiesAccepted, setCookiesAccepted] = useState(localStorage.getItem("cookiesAccepted") === "true");
+  const [showCookiePopup, setShowCookiePopup] = useState(!cookiesAccepted);
+
+  const handleAcceptCookies = () => {
+    setCookiesAccepted(true);
+    setShowCookiePopup(false);
+    localStorage.setItem("cookiesAccepted", "true"); // Save decision to local storage
+  };
+
+  const handleRejectCookies = () => {
+    alert("You need to accept cookies to use this website.");
+  };
+
+  if (!cookiesAccepted) {
+    return (
+      <div>
+        {showCookiePopup && (
+          <CookieConsent 
+            onAccept={handleAcceptCookies}
+            onReject={handleRejectCookies}
+          />
+        )}
+        {/* Rest of your app goes here */}
+      </div>
+    );
+  }
 
   const AuthorizedInventory = withAuthorization(Inventory);
   const AuthorizedCustomers = withAuthorization(Customers);
   const AuthorizedOrders = withAuthorization(Orders);
   const AuthorizedProductInformation = withAuthorization(ProductInformation);
   const AuthorizedCustomerInformation = withAuthorization(CustomerInformation);
+  const AuthorizedExtraInfo = withAuthorization(ExtraInfo)
 
   return (
     <Router>
@@ -61,6 +92,8 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login setIsLogged={setIsLogged} />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/graph" element={<MonthlySalesChart/>}/>
+          <Route path="/inventory/:product_id/statistics" element={<AuthorizedExtraInfo/>}/>
           <Route
             path="/inventory/:product_id"
             element={<AuthorizedProductInformation />}

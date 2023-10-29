@@ -1,7 +1,10 @@
 // Inventory.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ProductCard from "./ProductCard";
+import Filtering from "./Filtering";
+import ProductsList from "./ProductsList";
+import AddNewProduct from "./AddNewProduct";
+import AddNewCategory from "./AddNewCategory";
 import "./Inventory.css";
 
 function Inventory() {
@@ -17,6 +20,11 @@ function Inventory() {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
 
   const baseURL = "http://localhost:3000/inventory";
 
@@ -43,11 +51,14 @@ function Inventory() {
   const fetchCategories = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response = await axios.get("http://localhost:3000/categories/get-all-categories", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:3000/categories/get-all-categories",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setCategories(response.data);
       console.log(response.data);
     } catch (error) {
@@ -91,22 +102,23 @@ function Inventory() {
   const handleCategoryAdd = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response = await axios.post("http://localhost:3000/categories/add-category", 
+      const response = await axios.post(
+        "http://localhost:3000/categories/add-category",
         {
-          name: CategoryName,  
-          description: CategoryDescription  
+          name: CategoryName,
+          description: CategoryDescription,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-  
-      if (response.status === 201) {  
+
+      if (response.status === 201) {
         alert("Category added successfully");
-        setCategoryName("");  
-        setCategoryDescription("");  
+        setCategoryName("");
+        setCategoryDescription("");
       } else {
         alert("Failed to add category");
       }
@@ -115,7 +127,6 @@ function Inventory() {
       alert("Failed to add category");
     }
   };
-  
 
   const deleteProduct = async (productId) => {
     try {
@@ -138,6 +149,7 @@ function Inventory() {
   };
 
   const handleSearchChange = (event) => {
+    // console.log(event)
     setSearchTerm(event.target.value);
   };
 
@@ -150,14 +162,31 @@ function Inventory() {
   };
 
   function getProductCategoryNames(product, categories) {
-    return product.categories.map(catId => {
-        const categoryObj = categories.find(category => category._id === catId);
+    return product.categories
+      .map((catId) => {
+        const categoryObj = categories.find(
+          (category) => category._id === catId
+        );
         return categoryObj ? categoryObj.name : null;
-    }).filter(Boolean);
-}
+      })
+      .filter(Boolean);
+  }
 
-  const filteredProducts = products.filter((product) =>
-    product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+  const toggleCategorySelection = (categoryId) => {
+    setSelectedCategories((prevSelected) => {
+      if (prevSelected.includes(categoryId)) {
+        return prevSelected.filter((id) => id !== categoryId);
+      } else {
+        return [...prevSelected, categoryId];
+      }
+    });
+  };
+
+  const filteredProducts = products.filter(
+    (product) =>
+      product.product_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      product.price >= minPrice &&
+      product.price <= maxPrice
   );
 
   const sortedProducts = [...filteredProducts];
@@ -167,129 +196,79 @@ function Inventory() {
     sortedProducts.sort((a, b) => b.product_name.localeCompare(a.product_name));
   }
 
+  const filteredByCategoryProducts = selectedCategories.length
+    ? sortedProducts.filter((product) =>
+        selectedCategories.some((catId) => product.categories.includes(catId))
+      )
+    : sortedProducts;
 
   // Similarly, you can add handleUpdate, handleDelete, handleGet, and handleList functions
 
   return (
     <div className="inventory">
       <div className="inventory-products-add">
-        <div className="add-product">
-          <h3>Add Product</h3>
+        <div className="add-section">
+          {/* Add New Product Component */}
+          <AddNewProduct
+            productName={productName}
+            setProductName={setProductName}
+            productDescription={productDescription}
+            setProductDescription={setProductDescription}
+            stockQuantity={stockQuantity}
+            setStockQuantity={setStockQuantity}
+            price={price}
+            setPrice={setPrice}
+            barcode={barcode}
+            setBarcode={setBarcode}
+            handleFileChange={handleFileChange}
+            handleAdd={handleAdd}
+          />
+
           <hr />
-          <label htmlFor="product-name">Product Name</label>
-          <input
-            id="product-name"
-            placeholder="Product Name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-          />
 
-          <label htmlFor="product-description">Product Description</label>
-          <input
-            id="product-description"
-            placeholder="Product Description"
-            value={productDescription}
-            onChange={(e) => setProductDescription(e.target.value)}
+          {/* Add New Category Component */}
+          <AddNewCategory
+            CategoryName={CategoryName}
+            setCategoryName={setCategoryName}
+            CategoryDescription={CategoryDescription}
+            setCategoryDescription={setCategoryDescription}
+            handleCategoryAdd={handleCategoryAdd}
           />
-
-          <label htmlFor="stock-quantity">Stock Quantity</label>
-          <input
-            id="stock-quantity"
-            type="number"
-            placeholder="Stock Quantity"
-            value={stockQuantity}
-            onChange={(e) => setStockQuantity(Number(e.target.value))}
-          />
-
-          <label htmlFor="price">Price</label>
-          <input
-            id="price"
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
-
-          <label htmlFor="barcode">Barcode</label>
-          <input
-            id="barcode"
-            placeholder="Barcode"
-            value={barcode}
-            onChange={(e) => setBarcode(e.target.value)}
-          />
-
-          <label htmlFor="image-upload">Image Upload</label>
-          <input id="image-upload" type="file" onChange={handleFileChange} />
-
-          <button onClick={handleAdd}>Add Product</button>
-          <hr/>
-          <h3>Add Category</h3>
-          <label htmlFor="category-name">Category Name</label>
-          <input
-            id="category-name"
-            placeholder="Category Name"
-            value={CategoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
-
-          <label htmlFor="category-description">Category Description</label>
-          <input
-            id="category-description"
-            placeholder="Category Description"
-            value={CategoryDescription}
-            onChange={(e) => setCategoryDescription(e.target.value)}
-          />
-          <button onClick={handleCategoryAdd}>Add Category</button>
         </div>
+      </div>
+      <div className="products">
+        <h3>Your Products</h3>
+        <hr />
 
-        <div className="products">
-          <h3>Your Products</h3>
-          <hr />
-          <div className="filter-section-inventory">
-            <input
-              className="search-input-inventory"
-              type="text"
-              placeholder="Search by name"
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <button
-              className={`sort-button-inventory ${
-                sortOrder === "asc" ? "active-filter" : ""
-              }`}
-              onClick={() => toggleSortOrder("asc")}
-            >
-              Sort A-Z
-            </button>
-            <button
-              className={`sort-button-inventory ${
-                sortOrder === "desc" ? "active-filter" : ""
-              }`}
-              onClick={() => toggleSortOrder("desc")}
-            >
-              Sort Z-A
-            </button>
-          </div>
-          <ul>
-            {sortedProducts.map((product) => (
-              <li key={product._id}>
-                <button onClick={() => console.log(getProductCategoryNames(product, categories))}>categories</button>
-                <ProductCard
-                  key={product._id}
-                  product_id={product._id}
-                  product_name={product.product_name}
-                  product_description={product.product_description}
-                  price={product.price}
-                  stock_quantity={product.stock_quantity}
-                  image_url={product.image_url}
-                  barcode={product.barcode}
-                  categories={getProductCategoryNames(product, categories)}
-                  onDelete={deleteProduct}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Filtering Component */}
+        <Filtering
+          searchTerm={searchTerm}
+          handleSearchChange={handleSearchChange}
+          showCategoryDropdown={showCategoryDropdown}
+          setShowCategoryDropdown={setShowCategoryDropdown}
+          categories={categories}
+          selectedCategories={selectedCategories}
+          toggleCategorySelection={toggleCategorySelection}
+          sortOrder={sortOrder}
+          toggleSortOrder={toggleSortOrder}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          topPrice={
+            products.length > 0
+              ? Math.max(...products.map((product) => product.price))
+              : 0
+          }
+          setMinPrice={setMinPrice}
+          setMaxPrice={setMaxPrice}
+        />
+
+        {/* Products List Component */}
+        <ProductsList
+          products={filteredByCategoryProducts}
+          categories={categories}
+          onDelete={deleteProduct}
+          getProductCategoryNames={getProductCategoryNames}
+        />
       </div>
     </div>
   );

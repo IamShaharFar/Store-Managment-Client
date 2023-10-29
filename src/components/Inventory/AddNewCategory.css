@@ -1,0 +1,62 @@
+/* AddNewCategory.css */
+
+.add-category {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.add-category-header {
+  padding: 16px;
+  cursor: pointer;
+  background-color: #2c3e50;
+  color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 10px;
+}
+
+.add-category-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-category-form {
+  padding: 16px;
+}
+
+.add-category-form label,
+.add-category-form input,
+.add-category-form button {
+  display: block;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.add-category-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-category-form button {
+  padding: 10px;
+  background-color: #2980b9;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-category-form button:hover {
+  background-color: #3498db;
+}
+
+@media (max-width: 768px) {
+  .add-category {
+      margin: 10px;
+  }
+}

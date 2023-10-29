@@ -40,16 +40,11 @@ function Login({setIsLogged}) {
 
         const token = response.data.token;
         if(token){
-            alert("Login successful!");
-            console.log("Token:", token);
             localStorage.setItem('jwtToken', token);
             localStorage.setItem('tokenTimestamp', Date.now().toString());
         }else{
           alert("login failed")
         }
-
-
-        // Handle the successful login, e.g., navigate to a different page or update the UI
 
         return token;
 

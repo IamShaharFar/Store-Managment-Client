@@ -8,6 +8,7 @@ function ProductInformation() {
   const [product, setProduct] = useState({});
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [uploadedImage, setUploadedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -45,11 +46,16 @@ function ProductInformation() {
         }
       );
       setCategories(response.data);
-      console.log(response.data);
+  
+      if (response.data.length > 0) {
+        setSelectedCategory(response.data[0]._id);
+      }
+  
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   };
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -68,6 +74,7 @@ function ProductInformation() {
       }));
     }
   };
+  
 
   const handleRemoveCategory = (categoryIdToRemove) => {
     setProduct((prevProduct) => ({
@@ -78,24 +85,53 @@ function ProductInformation() {
     }));
   };
 
+  const handleImageChange = (event) => {
+    setUploadedImage(event.target.files[0]);
+  };
+
   const handleSaveChanges = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
+      const formData = new FormData();
+  
+      // Handle each key in the product
+      for (let key in product) {
+        // Special handling for array fields like 'categories'
+        if (Array.isArray(product[key])) {
+          product[key].forEach(item => {
+            formData.append(`${key}[]`, item);
+          });
+        } else {
+          formData.append(key, product[key]);
+        }
+      }
+   
+  
+      if (uploadedImage) {
+        formData.append("image", uploadedImage);
+      }
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data' 
+        },
+      };
+  
       await axios.put(
         `http://localhost:3000/inventory/update/${product_id}`,
-        product,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        formData,
+        config
       );
+  
       alert("Product updated successfully!");
     } catch (error) {
       alert(error);
       console.error("Error updating product:", error);
     }
   };
+  
+  
 
   return isLoading ? (
     <div>
@@ -153,25 +189,8 @@ function ProductInformation() {
           onChange={handleInputChange}
           placeholder="Barcode"
         />
-        <div>
-          <h4>Product Categories:</h4>
-          <ul>
-            {product.categories.map((catId) => {
-              const category = categories.find((cat) => cat._id === catId);
-              return (
-                <li key={catId}>
-                  <button
-                    className="remove-category-button"
-                    onClick={() => handleRemoveCategory(catId)}
-                  >
-                    <i className="fa-solid fa-minus"></i>
-                  </button>
-                  {category ? category.name : "Unknown"}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <label htmlFor="product-image">Upload Image:</label>
+        <input type="file" className="product-image-upload" onChange={handleImageChange} />
         <div className="category-add-container">
           <h4 className="category-add-title">Add Category:</h4>
           <select
@@ -189,6 +208,26 @@ function ProductInformation() {
             Add
           </button>
         </div>
+        <div>
+          <h4>Product Categories:</h4>
+          <ul>
+            {product.categories.map((catId) => {
+              const category = categories.find((cat) => cat._id === catId);
+              return (
+                <li key={catId} className="remove-category-container">
+                  <button
+                    className="remove-category-button"
+                    onClick={() => handleRemoveCategory(catId)}
+                  >
+                    <i className="fa-solid fa-minus"></i>
+                  </button>
+                  {category ? category.name : "Unknown"}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
 
         <button onClick={handleSaveChanges}>Save Changes</button>
       </div>

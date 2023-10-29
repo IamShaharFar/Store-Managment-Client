@@ -1,0 +1,43 @@
+.order-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.order-card:hover {
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.order-details p {
+    margin-top: 10px;
+    padding: 0;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.product img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.product-info p {
+    margin: 0;
+    padding: 0;
+}

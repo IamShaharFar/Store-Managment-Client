@@ -5,4 +5,17 @@
     text-align: center;
     font-size: 32px;
   }
-  
+
+  .banner-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25vw;
+    overflow: hidden;
+}
+
+.banner-image img {
+    width: 60vw;
+    height: auto;
+    border-radius: 150px;
+}

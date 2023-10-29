@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CustomerCard from "./CustomerCard";
 import "./Customers.css";
+import AddNewCustomer from "./AddNewCustomer ";
 
 function Customers() {
   const [customerName, setCustomerName] = useState("");
@@ -54,6 +55,24 @@ function Customers() {
     }
   };
 
+  const deleteCustomer = async (id) => {
+    try {
+      const token = localStorage.getItem("jwtToken"); // Assume token is stored in localStorage
+      const response = await axios.delete(
+        `http://localhost:3000/customers/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Customer deleted successfully:", response.data);
+      fetchCustomers();
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
+  };
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -83,77 +102,56 @@ function Customers() {
 
   return (
     <div className="customers-container">
-      <div className="add-customer">
-        <h3 className="customers-title">Add Customer</h3>
-        <input
-          className="customers-input"
-          type="text"
-          placeholder="Customer Name"
-          onChange={(e) => setCustomerName(e.target.value)}
-        />
-        <input
-          className="customers-input"
-          type="email"
-          placeholder="Customer Email"
-          onChange={(e) => setCustomerEmail(e.target.value)}
-        />
-        <input
-          className="customers-input"
-          type="text"
-          placeholder="Contact Number"
-          onChange={(e) => setContactNumber(e.target.value)}
-        />
-        <input
-          className="customers-input"
-          type="text"
-          placeholder="Address"
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <button className="customers-button" onClick={addCustomer}>
-          Add Customer
-        </button>
-      </div>
+      <AddNewCustomer
+        customerName={customerName}
+        setCustomerName={setCustomerName}
+        customerEmail={customerEmail}
+        setCustomerEmail={setCustomerEmail}
+        contactNumber={contactNumber}
+        setContactNumber={setContactNumber}
+        address={address}
+        setAddress={setAddress}
+        handleCustomerAdd={addCustomer}
+      />
 
       <div className="customers-list">
         <h3 className="customers-title">All Customers</h3>
-        <div className="filter-section">
+        <div className="filter-container">
           <input
-            className="search-input"
             type="text"
-            placeholder="Search by name"
+            placeholder="Search..."
             value={searchTerm}
             onChange={handleSearchChange}
+            className="filter-input"
           />
           <button
-            className={`sort-button ${
-              sortOrder === "asc" ? "active-filter" : ""
-            }`}
             onClick={() => toggleSortOrder("asc")}
+            className="filter-button sort-asc-button"
           >
             Sort A-Z
           </button>
           <button
-            className={`sort-button ${
-              sortOrder === "desc" ? "active-filter" : ""
-            }`}
             onClick={() => toggleSortOrder("desc")}
+            className="filter-button sort-desc-button"
           >
             Sort Z-A
           </button>
         </div>
-        {sortedCustomers.map((customer) => (
-          <div key={customer._id}>
-            <CustomerCard
-              onDelete={fetchCustomers}
-              key={customer._id}
-              customer_id={customer._id}
-              customer_name={customer.customer_name}
-              customer_email={customer.customer_email}
-              contact_number={customer.contact_number}
-              address={customer.address}
-            />
-          </div>
-        ))}
+        <div className="customers-list-container">
+          {sortedCustomers.map((customer) => (
+            <div key={customer._id}>
+              <CustomerCard
+                onDelete={deleteCustomer}
+                key={customer._id}
+                customer_id={customer._id}
+                customer_name={customer.customer_name}
+                customer_email={customer.customer_email}
+                contact_number={customer.contact_number}
+                address={customer.address}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

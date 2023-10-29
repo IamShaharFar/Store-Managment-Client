@@ -15,10 +15,6 @@ align-items: center;
     width: 70vw;
 }
 
-.product-information hr{
-    margin-bottom: 80px;
-}
-
 .product-information input {
     width: 100%;
     padding: 10px;
@@ -27,14 +23,35 @@ align-items: center;
     border-radius: 4px;
 }
 
+.product-image-upload {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+ul {
+  list-style-type: none;
+  padding-left: 0;  
+}
+
+li {
+  display: flex;
+  align-items: center;  
+}
+
 .category-add-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 0;
+    margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+  }
+
+  .remove-category-container{
+    margin-bottom: 10px;
   }
 
   .remove-category-button {
@@ -42,18 +59,23 @@ align-items: center;
     color: white;
     border: none;
     border-radius: 50%;  /* Makes it a circle */
-    padding: 8px;  /* Adjust as needed */
+    padding: 5px; 
     margin-right: 10px;  /* Space between the button and category name */
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 10px;  /* Adjust as needed */
+    font-size: 8px;  /* Adjusted for a smaller size */
     display: inline-block;
     vertical-align: middle;
-  }
+}
   
-  .remove-category-button:hover {
-    background-color: #e60000;
-  }
+.remove-category-button:hover {
+    background-color: darkred;  /* Darker shade for hover */
+}
+
+.remove-category-button:focus {
+    outline: none;  /* Removes the default focus outline */
+}
+
   
   .category-add-title {
     margin-right: 20px;
@@ -83,17 +105,3 @@ align-items: center;
     background-color: #0056b3;
   }
   
-
-.product-information button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.product-information button:hover {
-    background-color: #0056b3;
-}
