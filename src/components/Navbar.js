@@ -27,6 +27,9 @@ function Navbar({ isLogged, setIsLogged }) {
       <button onClick={displayToken}>Display JWT Token</button>
       {isLogged ? (
         <>
+        <Link to="/dashboard" className="navbar-link">
+            Dashboard
+          </Link>
           <Link to="/inventory" className="navbar-link">
             Inventory
           </Link>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import './Register.css';
 
@@ -6,6 +6,7 @@ function Register() {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const passwordRef = useRef(null);
 
   const handleRegister = async () => {
     if (!email || !password || !userName) {
@@ -38,15 +39,26 @@ function Register() {
     }
 };
 
-  return (
+const togglePasswordVisibility = (show) => {
+  if (passwordRef.current) {
+    passwordRef.current.type = show ? "text" : "password";
+  }
+};
+
+return (
+  <div className="register-container">
     <div className="register">
-      {/* Add other input fields as needed */}
+      <h2>Store Manager Registration</h2>
       <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type='text' placeholder='User Name'onChange={(e) => setUserName(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <input type='text' placeholder='User Name' onChange={(e) => setUserName(e.target.value)} />
+      <div className="password-container">
+        <input ref={passwordRef} type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+        <i className="fas fa-eye" onMouseEnter={() => togglePasswordVisibility(true)} onMouseLeave={() => togglePasswordVisibility(false)}></i>
+      </div>
       <button onClick={handleRegister}>Register</button>
     </div>
-  );
+  </div>
+);
 }
 
 export default Register;

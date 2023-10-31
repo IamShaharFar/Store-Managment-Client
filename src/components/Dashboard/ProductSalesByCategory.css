@@ -1,0 +1,33 @@
+.category-sales-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.category-sales-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+    color: #333;
+}
+
+.category-sales-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+}
+
+.linechart-container-psbc {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 100%; 
+}

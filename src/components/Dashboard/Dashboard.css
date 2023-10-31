@@ -1,0 +1,45 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 100%;
+    padding: 20px;
+}
+
+.top-section {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.vertical{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.middle-section {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.graph-section {
+    width: 60%;
+    margin-bottom: 20px;
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+@media (max-width: 800px) {
+    .middle-section {
+        flex-direction: column;
+        align-items: center;
+    }
+}

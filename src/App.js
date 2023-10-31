@@ -13,8 +13,7 @@ import ProductInformation from "./components/Inventory/ProductInformation";
 import CustomerInformation from "./components/Customers/CustomerInformation";
 import CookieConsent from "./components/CookieConsent ";
 import withAuthorization from "./components/withAuthorization";
-import MonthlySalesChart from "./components/Inventory/MonthlySalesChart";
-import ProductStatistics from "./components/Inventory/ProductStatistics";
+import Dashboard from "./components/Dashboard/Dashboard";
 import ExtraInfo from "./components/ExtraInfo/ExtraInfo";
 
 function RouteChangeListener() {
@@ -82,7 +81,9 @@ function App() {
   const AuthorizedOrders = withAuthorization(Orders);
   const AuthorizedProductInformation = withAuthorization(ProductInformation);
   const AuthorizedCustomerInformation = withAuthorization(CustomerInformation);
-  const AuthorizedExtraInfo = withAuthorization(ExtraInfo)
+  const AuthorizedExtraInfo = withAuthorization(ExtraInfo);
+  const AuthorizedDashboard = withAuthorization(Dashboard);
+
 
   return (
     <Router>
@@ -92,7 +93,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login setIsLogged={setIsLogged} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/graph" element={<MonthlySalesChart/>}/>
+          <Route path="/dashboard" element={<AuthorizedDashboard/>}/>
           <Route path="/inventory/:product_id/statistics" element={<AuthorizedExtraInfo/>}/>
           <Route
             path="/inventory/:product_id"

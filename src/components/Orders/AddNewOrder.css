@@ -1,4 +1,6 @@
 .new-order {
+    display: flex;
+    flex-direction: column;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     padding: 20px;
@@ -6,15 +8,36 @@
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-.order-inputs {
+.new-order-inputs-image {
     display: flex;
     align-items: center;
+}
+
+.order-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
 }
 
+.order-inputs select,
+.order-inputs input {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    width: 200px;
+    /* set the width */
+}
+
+
+.input-div {
+    display: flex;
+    flex-direction: column;
+}
+
 .product-image {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     margin-right: 10px;
     border-radius: 5px;
@@ -36,20 +59,49 @@
     transition: all 0.3s;
 }
 
+.add-product-btn {
+    margin-left: 20px;
+}
+
 .order-inputs button:hover {
     background-color: #0056b3;
 }
 
 .order-products {
+    margin-top: 20px;
     margin-bottom: 15px;
 }
+
+.order-product-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.remove-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.remove-btn i {
+    font-size: 16px;
+}
+
 
 .order-total {
     margin-bottom: 15px;
     font-weight: bold;
 }
 
-.new-order > button {
+.new-order>button {
     background-color: #28a745;
     color: white;
     padding: 10px 20px;
@@ -59,6 +111,6 @@
     transition: all 0.3s;
 }
 
-.new-order > button:hover {
+.new-order>button:hover {
     background-color: #1e7e34;
 }
