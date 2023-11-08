@@ -8,6 +8,7 @@ function Login({ setIsLogged }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const passwordRef = useRef(null);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -34,7 +35,7 @@ function Login({ setIsLogged }) {
 
   async function loginUser(email, password) {
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post(`${baseUrl}/auth/login`, {
         email: email,
         password: password,
       });
@@ -52,7 +53,7 @@ function Login({ setIsLogged }) {
       if (error.response && error.response.status === 400) {
         alert("Invalid credentials");
       } else {
-        alert("Server error");
+        alert(error);
       }
       console.error("Error logging in:", error);
       return null;
@@ -94,7 +95,7 @@ function Login({ setIsLogged }) {
               onMouseLeave={() => togglePasswordVisibility(false)}
             ></i>
           </div>
-          <button type="submit">Login</button>
+          <button type="submit" onClick={handleLogin}>Login</button>
         </form>
       </div>
     </div>

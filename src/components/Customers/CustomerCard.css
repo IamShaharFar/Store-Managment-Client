@@ -71,6 +71,7 @@
     .customer-card {
         flex-direction: column;
         align-items: flex-start;
+        height: 65vw;
     }
 
     .profile-image {

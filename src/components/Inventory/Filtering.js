@@ -1,5 +1,5 @@
-import React from 'react';
-import './Filtering.css';  // Importing a CSS file for styling
+import React from "react";
+import "./Filtering.css"; // Importing a CSS file for styling
 
 const Filtering = ({
   searchTerm,
@@ -56,41 +56,45 @@ const Filtering = ({
                 onChange={() => toggleCategorySelection(category._id)}
                 className="category-checkbox"
               />
-              <label htmlFor={category._id} className="category-label">{category.name}</label>
+              <label htmlFor={category._id} className="category-label">
+                {category.name}
+              </label>
             </div>
           ))}
         </div>
       )}
-<div className="price-range">
-  <div className="price-range-item">
-    <label htmlFor="min-price" className="price-label">Min Price: ${minPrice}</label>
-    <input
-      type="range"
-      min="0"
-      max={topPrice}
-      value={minPrice}
-      onChange={(e) => setMinPrice(e.target.value)}
-      className="price-input min-price-input"
-      id="min-price"
-    />
-  </div>
-  <div className="price-range-item">
-    <label htmlFor="max-price" className="price-label">Max Price: ${maxPrice}</label>
-    <input
-      type="range"
-      min="0"
-      max={topPrice}
-      value={maxPrice}
-      onChange={(e) => setMaxPrice(e.target.value)}
-      className="price-input max-price-input"
-      id="max-price"
-    />
-  </div>
-</div>
-
+      <div className="price-range">
+        <div className="price-range-item">
+          <label htmlFor="min-price" className="price-label">
+            Min Price: ${minPrice}
+          </label>
+          <input
+            type="range"
+            min="0"
+            max={topPrice}
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            className="price-input min-price-input"
+            id="min-price"
+          />
+        </div>
+        <div className="price-range-item">
+          <label htmlFor="max-price" className="price-label">
+            Max Price: ${maxPrice}
+          </label>
+          <input
+            type="range"
+            min="0"
+            max={topPrice}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            className="price-input max-price-input"
+            id="max-price"
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Filtering;
-

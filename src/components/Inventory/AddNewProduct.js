@@ -16,17 +16,17 @@ const AddNewProduct = ({
   handleFileChange,
   handleAdd,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpandedProduct, setisExpandedProduct] = useState(false);
 
   return (
     <div className="add-product">
       <div
         className="add-product-header"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={() => setisExpandedProduct(!isExpandedProduct)}
       >
         <h2 className="add-product-title">
           Add New Product
-          {isExpanded ? (
+          {isExpandedProduct ? (
             <i className="fas fa-caret-up"></i>
           ) : (
             <i className="fas fa-caret-down"></i>
@@ -34,7 +34,7 @@ const AddNewProduct = ({
         </h2>
       </div>
 
-      {isExpanded && (
+      {isExpandedProduct && (
         <div className="add-product-form">
           <label>Product Name</label>
           <input

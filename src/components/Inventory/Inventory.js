@@ -23,10 +23,9 @@ function Inventory() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-
-  const baseURL = "http://localhost:3000/inventory";
 
   useEffect(() => {
     fetchProducts();
@@ -36,7 +35,7 @@ function Inventory() {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response = await axios.get(baseURL, {
+      const response = await axios.get(`${baseUrl}/inventory`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +51,7 @@ function Inventory() {
     try {
       const token = localStorage.getItem("jwtToken");
       const response = await axios.get(
-        "http://localhost:3000/categories/get-all-categories",
+        `${baseUrl}/categories/get-all-categories`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,6 +71,7 @@ function Inventory() {
 
   const handleAdd = async () => {
     try {
+      console.log(`${baseUrl}/inventory/add`)
       const token = localStorage.getItem("jwtToken");
 
       const formData = new FormData();
@@ -84,7 +84,7 @@ function Inventory() {
         formData.append("image", imageFile);
       }
 
-      await axios.post(`${baseURL}/add`, formData, {
+      await axios.post(`${baseUrl}/inventory/add`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data", // Important when sending files
@@ -103,7 +103,7 @@ function Inventory() {
     try {
       const token = localStorage.getItem("jwtToken");
       const response = await axios.post(
-        "http://localhost:3000/categories/add-category",
+        `${baseUrl}/categories/add-category`,
         {
           name: CategoryName,
           description: CategoryDescription,
@@ -138,7 +138,7 @@ function Inventory() {
       };
 
       await axios.delete(
-        `http://localhost:3000/inventory/delete/${productId}`,
+        `${baseUrl}/inventory/delete/${productId}`,
         config
       );
 
@@ -208,7 +208,6 @@ function Inventory() {
     <div className="inventory">
       <div className="inventory-products-add">
         <div className="add-section">
-          {/* Add New Product Component */}
           <AddNewProduct
             productName={productName}
             setProductName={setProductName}
@@ -223,10 +222,6 @@ function Inventory() {
             handleFileChange={handleFileChange}
             handleAdd={handleAdd}
           />
-
-          <hr />
-
-          {/* Add New Category Component */}
           <AddNewCategory
             CategoryName={CategoryName}
             setCategoryName={setCategoryName}

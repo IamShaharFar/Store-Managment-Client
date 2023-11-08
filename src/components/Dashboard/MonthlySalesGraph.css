@@ -22,3 +22,9 @@
     font-weight: 500;
     color: #333;
 }
+
+@media only screen and (max-width: 768px){
+    .sales-graph-container{
+        width: 90vw;
+    }
+}

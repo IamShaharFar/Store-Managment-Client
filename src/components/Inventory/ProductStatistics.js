@@ -18,7 +18,9 @@ function ProductStatistics() {
   const [product, setProduct] = useState(null);
   const [orders, setOrders] = useState([]);
   const [categories, setCategories] = useState([]);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const token = window.localStorage.getItem("jwtToken");
+  
 
   useEffect(() => {
     fetchProduct();
@@ -27,7 +29,7 @@ function ProductStatistics() {
 
   function fetchProduct() {
     axios
-      .get(`http://localhost:3000/inventory/${product_id}`, {
+      .get(`${baseUrl}/inventory/${product_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +50,7 @@ function ProductStatistics() {
   }
 
   async function fetchOrders() {
-    const response = await axios.get("http://localhost:3000/orders", {
+    const response = await axios.get(`${baseUrl}/orders`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

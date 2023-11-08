@@ -6,6 +6,7 @@ function Register() {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const passwordRef = useRef(null);
 
   const handleRegister = async () => {
@@ -19,7 +20,7 @@ function Register() {
     }
 
     try {
-        const response = await axios.post("http://localhost:3000/auth/register", {
+        const response = await axios.post(`${baseUrl}/auth/register`, {
             username: userName,
             email: email,
             password: password,

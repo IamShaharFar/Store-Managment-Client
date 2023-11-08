@@ -10,6 +10,7 @@ function ProductInformation() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     fetchProduct();
@@ -20,7 +21,7 @@ function ProductInformation() {
     try {
       const token = localStorage.getItem("jwtToken");
       const response = await axios.get(
-        `http://localhost:3000/inventory/${product_id}`,
+        `${baseUrl}/inventory/${product_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +39,7 @@ function ProductInformation() {
     try {
       const token = localStorage.getItem("jwtToken");
       const response = await axios.get(
-        "http://localhost:3000/categories/get-all-categories",
+        `${baseUrl}/categories/get-all-categories`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -119,7 +120,7 @@ function ProductInformation() {
       };
   
       await axios.put(
-        `http://localhost:3000/inventory/update/${product_id}`,
+        `${baseUrl}/inventory/update/${product_id}`,
         formData,
         config
       );

@@ -35,6 +35,7 @@
 }
 
 .product-name {
+    text-align: start;
     font-size: 16px;
     color: #555;
     font-weight: 400;

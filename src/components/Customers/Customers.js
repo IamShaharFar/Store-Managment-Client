@@ -12,6 +12,7 @@ function Customers() {
   const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     fetchCustomers();
@@ -20,7 +21,7 @@ function Customers() {
   const fetchCustomers = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response = await axios.get("http://localhost:3000/customers", {
+      const response = await axios.get(`${baseUrl}/customers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,7 +37,7 @@ function Customers() {
     try {
       const token = localStorage.getItem("jwtToken");
       const response = await axios.post(
-        "http://localhost:3000/customers/add",
+        `${baseUrl}/customers/add`,
         {
           customer_name: customerName,
           customer_email: customerEmail,
@@ -59,7 +60,7 @@ function Customers() {
     try {
       const token = localStorage.getItem("jwtToken"); // Assume token is stored in localStorage
       const response = await axios.delete(
-        `http://localhost:3000/customers/delete/${id}`,
+        `${baseUrl}/customers/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

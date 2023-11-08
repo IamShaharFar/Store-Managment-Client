@@ -33,7 +33,7 @@
   background-color: #34495e;
 }
 
-button {
+.navbar button {
   padding: 10px 20px;
   border: none;
   background-color: #2980b9;
@@ -43,20 +43,54 @@ button {
   transition: background-color 0.3s;
 }
 
-.navbar > button:hover {
+.navbar>button:hover {
   background-color: #3498db;
 }
 
-@media (max-width: 768px) {
-  .navbar {
-      flex-direction: column;
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.nav-items {
+  display: flex;
+  gap: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-items {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    right: 0;
+    background-color: #34495e;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-items.show {
+    display: flex;
   }
 
   .nav-link,
-  .navbar-link,
-  button {
-      width: 100%;
-      text-align: center;
-      margin: 5px 0;
+  .navbar-link {
+    color: #ecf0f1;
+    background-color:#2980b9;
+    padding: 10px;
+    margin: 5px;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    transition: background-color 0.3s;
   }
 }

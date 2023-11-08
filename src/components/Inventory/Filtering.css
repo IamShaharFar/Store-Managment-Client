@@ -1,6 +1,3 @@
-/* Filtering.css */
-
-/* General Container Styling */
 .filter-container {
     padding: 16px;
     background-color: #f9f9f9;
@@ -9,7 +6,6 @@
     margin-bottom: 20px;
 }
 
-/* Input and Button Styling */
 .filter-input,
 .filter-button {
     padding: 10px;
@@ -74,13 +70,32 @@
 }
 
 /* Responsive Styling for smaller screens */
-@media (max-width: 768px) {
-    .price-range {
+@media only screen and (max-width: 768px) {
+    .filter-container {
+        display: flex;
         flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .filter-input{
+        width: 100%;
+    }
+
+    .categories-dropdown {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .price-range {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .price-range-item {
         width: 100%;
-        margin-bottom: 10px;
     }
+
 }

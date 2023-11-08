@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Importing Link component
 import "./Navbar.css";
 
 function Navbar({ isLogged, setIsLogged }) {
+  const [navOpen, setNavOpen] = useState(false);
+
   const displayToken = () => {
     const token = localStorage.getItem("jwtToken");
     if (token) {
@@ -24,33 +26,38 @@ function Navbar({ isLogged, setIsLogged }) {
       <Link to="/" className="nav-link">
         <div className="navbar-brand">Store Management</div>
       </Link>
-      <button onClick={displayToken}>Display JWT Token</button>
-      {isLogged ? (
-        <>
-        <Link to="/dashboard" className="navbar-link">
-            Dashboard
-          </Link>
-          <Link to="/inventory" className="navbar-link">
-            Inventory
-          </Link>
-          <Link to="/customers" className="navbar-link">
-            Customers
-          </Link>
-          <Link to="/orders" className="navbar-link">
-            Orders
-          </Link>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <>
-          <Link to="/login" className="nav-link">
-            Login
-          </Link>
-          <Link to="/register" className="nav-link">
-            Register
-          </Link>
-        </>
-      )}
+      <button className="nav-toggle" onClick={() => setNavOpen(!navOpen)}>
+        <i className="fas fa-bars"></i>
+      </button>
+      <div className={`nav-items ${navOpen ? "show" : ""}`}>
+        {/* <button onClick={displayToken}>Display JWT Token</button> */}
+        {isLogged ? (
+          <>
+            <Link to="/dashboard" className="navbar-link">
+              Dashboard
+            </Link>
+            <Link to="/inventory" className="navbar-link">
+              Inventory
+            </Link>
+            <Link to="/customers" className="navbar-link">
+              Customers
+            </Link>
+            <Link to="/orders" className="navbar-link">
+              Orders
+            </Link>
+            <button className="navbar-link" onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+            <Link to="/register" className="nav-link">
+              Register
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 }

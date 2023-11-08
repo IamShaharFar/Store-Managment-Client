@@ -73,7 +73,7 @@ const MonthlySalesGraph = ({ orders }) => {
     <div className="sales-graph-container">
       <h2>Monthly Sales</h2>
       <div className="linechart-container">
-        <LineChart width={windowWidth*0.45} height={350} data={monthlyData}>
+        <LineChart width={windowWidth > 768 ? windowWidth*0.45 : windowWidth*0.9} height={350} data={monthlyData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
           <YAxis />

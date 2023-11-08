@@ -4,6 +4,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   margin: 20px;
+  width: 25vw;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
 }
@@ -55,8 +56,24 @@
   background-color: #3498db;
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .add-category {
-      margin: 10px;
-  }
+    width: 90vw;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.add-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.add-category-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 }

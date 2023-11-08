@@ -99,7 +99,7 @@ const ProductSalesByCategory = ({ orders, categories, products }) => {
         <option value="Last year">Last year</option>
       </select>
       <div className="linechart-container-psbc">
-        <BarChart width={windowWidth * 0.45} height={300} data={categoryData}>
+        <BarChart width={windowWidth > 768 ? windowWidth*0.45 : windowWidth*0.9} height={300} data={categoryData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="category" />
           <YAxis />

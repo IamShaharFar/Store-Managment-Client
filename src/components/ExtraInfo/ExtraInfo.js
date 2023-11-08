@@ -9,6 +9,7 @@ const ExtraInfo = () => {
   const [product, setProduct] = useState({});
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     fetchProduct();
@@ -19,7 +20,7 @@ const ExtraInfo = () => {
     try {
       const token = localStorage.getItem("jwtToken");
       const response = await axios.get(
-        `http://localhost:3000/inventory/${product_id}`,
+        `${baseUrl}/inventory/${product_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,7 +37,7 @@ const ExtraInfo = () => {
 
   const fetchOrders = async () => {
     const token = localStorage.getItem("jwtToken");
-    const response = await axios.get("http://localhost:3000/orders", {
+    const response = await axios.get(`${baseUrl}/orders`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

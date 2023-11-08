@@ -31,3 +31,9 @@
     align-items: flex-start;
     height: 100%; 
 }
+
+@media only screen and (max-width: 768px){
+    .category-sales-container{
+        width: 90vw;
+    }
+}

@@ -8,14 +8,14 @@ const AddNewCategory = ({
   setCategoryDescription,
   handleCategoryAdd
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpandedCategory, setisExpandedCategory] = useState(false);
 
   return (
     <div className="add-category">
-      <div className="add-category-header" onClick={() => setIsExpanded(!isExpanded)}>
-        <h2 className="add-category-title">Add New Category {isExpanded ? <i className="fas fa-caret-up"></i> : <i className="fas fa-caret-down"></i>}</h2>
+      <div className="add-category-header" onClick={() => setisExpandedCategory(!isExpandedCategory)}>
+        <h2 className="add-category-title">Add New Category {isExpandedCategory ? <i className="fas fa-caret-up"></i> : <i className="fas fa-caret-down"></i>}</h2>
       </div>
-      {isExpanded && (
+      {isExpandedCategory && (
         <div className="add-category-form">
           <label>Category Name</label>
           <input type="text" value={CategoryName} onChange={(e) => setCategoryName(e.target.value)} />

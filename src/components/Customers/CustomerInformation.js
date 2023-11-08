@@ -7,13 +7,14 @@ function CustomerInformation() {
   const { customer_id } = useParams();
   const [customer, setCustomer] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
         const token = localStorage.getItem("jwtToken");
         const response = await axios.get(
-          `http://localhost:3000/customers/${customer_id}`,
+          `${baseUrl}/customers/${customer_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,7 +39,7 @@ function CustomerInformation() {
   const handleSaveChanges = async () => {
     try {
       const token = localStorage.getItem("jwtToken"); // Retrieve the token from local storage
-      await axios.put(`http://localhost:3000/customers/update/${customer_id}`, customer, {
+      await axios.put(`${baseUrl}/customers/update/${customer_id}`, customer, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

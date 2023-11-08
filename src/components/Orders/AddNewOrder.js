@@ -9,6 +9,7 @@ const AddNewOrder = ({ products, onAdd }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState("");
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const token = window.localStorage.getItem("jwtToken");
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const AddNewOrder = ({ products, onAdd }) => {
   const fetchCustomers = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response = await axios.get("http://localhost:3000/customers", {
+      const response = await axios.get(`${baseUrl}/customers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,7 +74,7 @@ const AddNewOrder = ({ products, onAdd }) => {
   const saveOrder = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/orders/add",
+        `${baseUrl}/orders/add`,
         {
           products: orderProducts,
           total_price: totalPrice,
@@ -104,54 +105,58 @@ const AddNewOrder = ({ products, onAdd }) => {
             className="product-image"
           />
         </div>
-        <div className="order-inputs">
-          <div className="input-div">
-            <label htmlFor="product-select">Choose Product:</label>
-            <select
-              value={selectedProduct}
-              onChange={(e) => setSelectedProduct(e.target.value)}
-            >
-              <option value="" key="select-product" disabled>
-                Select Product
-              </option>
-              {products.map((product) => (
-                <option key={product._id} value={product._id}>
-                  {`${product.product_name} - ${product.price}$`}
+        <div className="order-new-product">
+          <div className="order-inputs">
+            <div className="input-div">
+              <label htmlFor="product-select">Choose Product:</label>
+              <select
+                value={selectedProduct}
+                onChange={(e) => setSelectedProduct(e.target.value)}
+              >
+                <option value="" key="select-product" disabled>
+                  Select Product
                 </option>
-              ))}
-            </select>
-          </div>
-          <div className="input-div">
-            <label htmlFor="quantity-input">Quantity:</label>
-            <input
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </div>
-          <div className="input-div">
-            <label htmlFor="customer-select">Choose Customer:</label>
-            <select
-              value={selectedCustomer}
-              onChange={(e) => setSelectedCustomer(e.target.value)}
-            >
-              <option value="" key="select-customer" disabled>
-                Select Customer
-              </option>
-              {customers
-                .sort((a, b) => a.customer_name.localeCompare(b.customer_name))
-                .map((customer) => (
-                  <option key={customer._id} value={customer._id}>
-                    {customer.customer_name}
+                {products.map((product) => (
+                  <option key={product._id} value={product._id}>
+                    {`${product.product_name} - ${product.price}$`}
                   </option>
                 ))}
-            </select>
+              </select>
+            </div>
+            <div className="input-div">
+              <label htmlFor="quantity-input">Quantity:</label>
+              <input
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+            <div className="input-div">
+              <label htmlFor="customer-select">Choose Customer:</label>
+              <select
+                value={selectedCustomer}
+                onChange={(e) => setSelectedCustomer(e.target.value)}
+              >
+                <option value="" key="select-customer" disabled>
+                  Select Customer
+                </option>
+                {customers
+                  .sort((a, b) =>
+                    a.customer_name.localeCompare(b.customer_name)
+                  )
+                  .map((customer) => (
+                    <option key={customer._id} value={customer._id}>
+                      {customer.customer_name}
+                    </option>
+                  ))}
+              </select>
+            </div>
           </div>
+          <button className="add-product-btn" onClick={addProductToOrder}>
+            Add Product to Order
+          </button>
         </div>
-        <button className="add-product-btn" onClick={addProductToOrder}>
-          Add Product to Order
-        </button>
       </div>
 
       <div className="order-products">

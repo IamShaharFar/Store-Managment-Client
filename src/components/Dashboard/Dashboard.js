@@ -12,11 +12,12 @@ const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const fetchOrders = async () => {
       const token = localStorage.getItem("jwtToken");
-      const response = await axios.get("http://localhost:3000/orders", {
+      const response = await axios.get(`${baseUrl}/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,7 +30,7 @@ const Dashboard = () => {
       try {
         const token = localStorage.getItem("jwtToken");
         const response = await axios.get(
-          "http://localhost:3000/categories/get-all-categories",
+          `${baseUrl}/categories/get-all-categories`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ const Dashboard = () => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem("jwtToken");
-        const response = await axios.get("http://localhost:3000/inventory", {
+        const response = await axios.get(`${baseUrl}/inventory`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
